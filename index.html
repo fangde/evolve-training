@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evolve Training —— 一种用于具身机器人 Foundation Model 的渐进式训练方法</title>
-<meta name="description" content="让机器人的智能像它的控制系统一样，从内到外，一层一层地生长出来。">
+<title>Evolve Training —— 一种用于具身智能 Foundation Model 的自底向上渐进式训练方法</title>
+<meta name="description" content="从内环到外环，一次增加一个模块，一次增加一种能力。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Evolve Training">
-<meta property="og:description" content="让机器人的智能像它的控制系统一样，从内到外，一层一层地生长出来。">
+<meta property="og:description" content="从内环到外环，一次增加一个模块，一次增加一种能力。">
 <meta property="og:image" content="https://fangde.github.io/evolve-training/images/cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -26,6 +26,8 @@
     letter-spacing: 0.5px; font-weight: 800; color: var(--ink); }
   .sub { font-size: clamp(14px, 2.6vw, 16.5px); color: #44506e; line-height: 1.7; margin: 0;
     padding-left: 14px; border-left: 3px solid var(--acc); }
+  .en { font-size: 12.5px; color: #8a94a8; letter-spacing: 0.4px; margin: 14px 0 0;
+    padding-left: 14px; }
   .cover { width: 100%; height: auto; display: block; border-radius: 10px;
     box-shadow: 0 14px 44px rgba(11,21,48,.18); margin: 26px 0 0; }
   .card { background: #fff; border-radius: 10px; overflow: hidden; margin-top: 26px;
@@ -39,109 +41,408 @@
 <body>
   <div class="wrap">
     <header class="hero">
-      <p class="kicker">RANDOM THOUGHTS · ROBOTICS &amp; AI</p>
+      <p class="kicker">TECHNICAL WHITEPAPER · V1.1 · 2026.10</p>
       <h1>Evolve Training</h1>
-      <p class="sub">一种用于具身机器人 Foundation Model 的渐进式训练方法</p>
+      <p class="sub">一种用于具身智能 Foundation Model 的自底向上渐进式训练方法</p>
+      <p class="en">Evolve Training: A Bottom-Up Developmental Learning Framework for Embodied Intelligence</p>
     </header>
     <img class="cover" src="images/cover.jpg" alt="Evolve Training">
     <main class="card">
 <section style="font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; font-size: 15.5px; color: #242832; line-height: 1.8; letter-spacing: 0.35px; word-spacing: 1.5px; padding: 20px 22px; background: #ffffff;">
-<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">一、基本思想：从内环到外环</h2>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">传统的机器人控制系统通常采用分层结构：先有内环，再有外环，然后逐渐增加更外层的控制环。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">机器人也有不同层次的传感器。例如，关节编码器属于内部传感器，用于测量机器人的运动状态；光学跟踪仪、相机等属于外部传感器，用于观测机器人在外部空间中的位置与运动。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们希望构建一种用于具身机器人的 Foundation Model。参考此前提出的 Society of Agents 架构思想，我们设计了一套指导机器人具身智能模型开发的方法论，并将它称为 Evolve Training。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它的基本原理是：从内环到外环，从简单能力到复杂能力，自底向上（Bottom-Up），逐层构建机器人的智能。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这种方法在一定程度上接近 Hierarchical Reinforcement Learning（分层强化学习），但我们更强调智能模块的渐进式构建，以及不同控制层之间的协同。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它并不是一开始就建立一个庞大的神经网络，对整个机器人进行端到端训练，而是每次增加一个模块，引入一种新的能力，再与已有模块连接，通过端到端强化学习进行联合优化。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">每个阶段的基本训练过程是：</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">监督模仿学习（Supervised Imitation Learning）→ 模块连接 → 端到端强化学习（End-to-End RL）。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">然后增加下一层，重复这个过程。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">下面以 Franka 机械臂为例，说明具体的训练过程。</p>
-<p style="text-align:center;margin:16px 0;"><img src="images/01.jpg" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">摘要</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">当前具身智能研究的一个重要方向，是利用端到端学习，将机器人的视觉、感知、运动规划与底层控制统一到神经网络之中。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">然而，真实机器人并不是一个简单的信息输入输出系统。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">机器人具有不同层次的控制回路、不同类型的传感器、不同时间尺度的反馈，以及具有明确物理约束的身体。动力学控制、空间运动、几何标定、视觉理解与语义感知，既相互依赖，又具有不同的学习难度和数据来源。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">如果从一开始就将所有能力放在一个端到端模型中训练，就需要同时处理大量异构数据，并在巨大的状态与动作空间中进行优化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们认为，这并不是唯一的训练方式。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">为此，我们提出 <strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">Evolve Training</strong>，一种面向具身智能 Foundation Model 的自底向上渐进式训练方法。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">其基本思想是：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">从内环到外环，从简单能力到复杂能力，一次增加一个模块，一次增加一种能力。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">每一阶段首先通过监督模仿学习建立基本能力，再将新模块接入已有系统，通过端到端强化学习进行联合优化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同类型的数据用于训练不同层次的控制环，从而将复杂的数据异构问题分解为多个相对清晰的学习问题。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">训练时，多个模块可以进行联合优化；推理时，不同控制环仍保持各自的执行频率与异步运行机制。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">与此同时，Evolve Training 将动力学内环与机器人本体视为不可分割的整体。更外层的感知、运动学与任务模块通过相对稳定的接口与之连接，从而支持不同智能模块的替换、组合和迁移。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一方法受到发育神经科学、分层运动控制、模块化内部模型与发展机器人学的启发，也与我们此前提出的 Society of Agents 架构思想相联系。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 的目标不是一次训练出一个完整的机器人智能，而是建立一种方法，使机器人的智能能够从已有能力出发，不断获得新的能力。</p>
 <p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
-<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">二、第一阶段：基础动力学控制</h2>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先训练机器人最基本的动力学控制能力。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们给 Franka 机械臂提供各种不同的运动轨迹（Trajectory），包括关节位置 q、关节速度 q̇ 等。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">AI 根据当前状态和目标轨迹，学习输出各关节的力矩（Torque，τ），使机器人能够尽可能准确地跟踪目标轨迹，并减小跟踪误差。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一阶段可以先通过监督学习模仿已有的动力学控制器，再通过强化学习进一步减小跟踪误差。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这里并不需要复杂的模型，一个简单的 MLP（多层感知机）可能就足够了。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它学习的是从运动状态及目标轨迹到关节力矩的映射，形成最基本的动力学控制内环。</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">一、为什么需要 Evolve Training</h2>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">1.1 机器人控制天然具有层次结构</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">传统机器人控制系统通常采用分层结构。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先建立最底层的动力学控制环，再建立运动学与空间控制外环，随后逐渐增加视觉、感知、任务规划等更高层的功能。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">机器人也拥有不同层次的传感器。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如，关节编码器、力矩传感器等内部传感器用于测量机器人的自身状态；相机、光学跟踪仪等外部传感器用于观测机器人与外部世界之间的空间关系。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同传感器的采样频率、观测维度、测量噪声与延迟各不相同。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">机器人底层动力学控制可能需要以 1000 Hz 运行，而空间控制、视觉感知与语义理解可以工作在更低的频率。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，机器人智能在物理上天然具有不同的层次与时间尺度。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们希望在训练过程中保留这种结构，而不是从一开始就要求一个模型同时学习所有功能。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">1.2 不同类型的数据对应不同的控制环</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">具身智能训练面临一个重要问题：训练数据具有高度异构性。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如：</p>
+<ul style="margin: 18px 0; padding-left: 0; list-style: none;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>关节编码器记录的是位置、速度和力矩。</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>外部跟踪仪记录的是机器人在三维空间中的位置和姿态。</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>相机记录的是二维图像。</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>时序数据可以反映负载和动力学变化。</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>视觉标注数据包含物体类别、位置及语义关系。</li></ul>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这些数据不仅维度不同，采样频率不同，所反映的物理意义也不同。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">如果要求所有数据都进入同一个端到端模型，就必须处理不同模态之间的同步、对齐和联合优化问题。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">但从传统控制系统的角度看，这些异构数据其实对应不同层次的控制环。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">关节数据适合训练动力学环；外部空间数据适合训练运动学环；历史运动数据可以训练自适应动力学感知；图像与空间位姿数据可以训练视觉 Encoder；语义标注可以训练目标感知模块。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，我们提出一种不同的数据组织方式：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">不同的数据训练不同的环，不同的环通过接口连接，再通过联合强化学习形成完整的智能。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">如此，数据异构性不再完全依赖一个统一模型来处理，而是通过分层训练被分解到不同的模块中。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">1.3 不从完整的端到端开始</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">端到端学习具有重要价值。它允许系统直接针对最终任务进行优化，避免人工设计的中间表示限制性能。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">但完整的端到端训练也带来问题。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先，训练复杂度较高。模型必须同时学习从感知到动作的多个映射。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">其次，训练数据要求较高。不同模态的数据往往需要在同一训练过程中进行对齐。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">再次，模型能力难以独立复用。更换相机、工具或者机器人身体时，可能需要重新训练较大部分系统。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">最后，不同控制层具有不同的实时性要求。完全统一的推理过程可能增加高层计算对底层控制的影响。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 并不反对端到端学习。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它提出的是：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">端到端是每一阶段的优化方法，而不是整个系统的初始训练方式。</strong></p>
 <p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
-<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">三、第二阶段：负载感知与自适应控制</h2>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">接下来，我们给机械臂增加负载。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">假设机器人末端的负载在 1–3 kg 之间随机变化。不同负载会改变机器人的动力学特性，使原有的轨迹跟踪产生误差。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，我们增加一个感知模块。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这个模块通过一段时间的历史运动数据（History），估算负载物体的重量以及重力方向。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先，通过监督学习训练这个感知模块，使它能够从运动历史中估计负载信息。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">然后，将感知模块与第一阶段已经训练好的动力学控制模块连接起来，进行端到端强化学习。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">通过联合训练，机器人能够根据历史运动状态估计负载变化，并调整输出力矩，使其在不同负载条件下仍然保持较小的轨迹跟踪误差。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这样，机器人便从基础的轨迹跟踪，发展出了适应不同负载的动力学控制能力。</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">二、Evolve Training 的基本原理</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 采用 Bottom-Up 的训练方式。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">机器人首先学习最基础的身体控制能力，然后逐渐增加感知、空间运动与环境理解能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">整个过程遵循三个步骤。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">2.1 第一步：监督模仿学习</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">每次增加一个新的模块，首先使用监督学习或模仿学习，建立其基本功能。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">训练数据可以来自传统控制器、物理仿真、运动学模型、标定算法、视觉数据集或专家演示。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">在这一阶段，新模块主要学习自己需要解决的问题。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如，动力学模块学习力矩输出，视觉模块学习空间位姿估计。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">无需一开始就要求整个机器人完成复杂任务。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">2.2 第二步：连接已有模块</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">新模块完成初步训练后，将其接入已经训练好的系统。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同模块之间通过相对稳定的接口进行信息交换。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如：</p>
+<ul style="margin: 18px 0; padding-left: 0; list-style: none;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>负载感知模块向动力学控制环输出估计参数。</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>运动学外环向动力学内环输出关节目标。</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>视觉模块向运动学外环输出空间目标。</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>几何标定模块向空间控制提供坐标变换信息。</li></ul>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">每增加一个模块，机器人便获得一种新的能力。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">2.3 第三步：端到端强化学习</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">模块连接之后，再进行端到端强化学习。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一阶段不只是优化新模块，而是改善新旧模块之间的协同，使完整系统能够更好地完成目标任务。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">为了保护已有能力，可以先冻结旧模块，再逐渐开放部分参数进行联合优化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一过程可以不断重复：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">监督模仿 → 模块连接 → 联合强化 → 增加下一模块。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这就是 Evolve Training 的基本训练循环。</p>
+<p style="text-align:center;margin:16px 0;"><img src="images/01.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
 <p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
-<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">四、第三阶段：运动学外环</h2>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第三阶段，我们开始学习运动学。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">与前面的动力学控制不同，运动学模块构成动力学内环之外的一个外环。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它学习的是从外部观测器空间到机器人关节编码器空间的映射。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">也就是说，机器人能够根据外部空间中的目标位置与观测状态，估算出相应的关节目标 q，并控制机械臂运动到指定位置。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这个模块同样可以是一个简单的 MLP。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先，通过监督学习，使模型学会空间坐标与关节坐标之间的映射。然后，将它与前两个阶段已经训练好的模型连接，再进行端到端强化学习，提高整个系统的空间跟踪精度。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">但需要强调的是：</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">端到端训练并不意味着端到端同步推理。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">在实际运行中，我们仍然保持不同控制环的异步执行。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">动力学内环运行在 1000 Hz，负责高速力矩控制。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">运动学外环运行在 100 Hz，负责空间目标到关节空间的映射。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这样既能通过端到端学习优化整体精度，又能保留传统分层控制系统的高速响应能力。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">训练时联合优化，推理时分层异步运行。</p>
-<p style="text-align:center;margin:16px 0;"><img src="images/02.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
-<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
-<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">五、第四阶段：自适应手眼标定</h2>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第四阶段，我们进一步增加一个 Encoder 模块，实现自适应手眼标定。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">在真实机器人系统中，相机的位置可能发生变化，工具的安装位置也可能改变。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">如果仍然采用原来的标定参数，机器人对外部空间目标的定位与跟踪就可能产生误差。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，我们希望 Encoder 能够根据一段时间内关节状态 q 与外部空间观测 x 的变化，估算相机与工具之间的几何关系是否发生变化。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先，通过监督学习，使 Encoder 能够识别不同的几何关系。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">然后，将这个模块接入原有的运动学外环，再通过端到端强化学习进行联合优化。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这样，机器人便能够从历史运动与观测数据中，学习感知相机或工具相对位置的变化，并对运动控制进行补偿。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">机器人由此进一步获得了自适应几何标定能力。</p>
-<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
-<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">六、第五阶段：视觉与语义感知</h2>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">接下来，我们在运动学外环之外，增加图像与语义感知模块。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一步包括两个主要能力。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先是视觉 Encoder。它能够从单帧或多帧图像中，估计机器人与目标之间的相对空间位置和姿态。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它将二维图像中的信息转换为三维空间中的几何关系，提供给已有的运动学外环。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">其次是目标感知与语义理解。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">机器人不仅需要知道目标在哪里，还需要从图像中识别目标是什么，理解需要操作的对象。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们可以先分别通过监督学习训练 Encoder 和 Perception Module，再将它们与已有的运动学、动力学模块连接起来，通过端到端强化学习进行联合优化。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这样，机器人便形成了完整的图像引导运动能力。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">从图像中识别目标，估计其三维位置，再由已有的运动学与动力学模块控制机器人到达指定位置。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这意味着机器人不再只能跟踪外部直接给定的空间目标，而是能够从视觉信息中自主获得目标位置并完成运动。</p>
-<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
-<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">七、模块可替换：大脑与身体</h2>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 还有一个重要特点：各层之间是可以互换的。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同模块通过相对稳定的接口连接，因此可以独立训练、替换和重新组合。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如，我们已经在一台 Franka 机械臂上训练了高层的视觉感知、空间运动规划能力。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">如果更换另一台机械臂，可以保留这些高层模块，只替换底层的动力学与运动学控制模块，再进行必要的联合训练。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这就相当于人的大脑换了一个身体。</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">三、具体实施：Franka 机械臂</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们以 Franka 七自由度机械臂为例，说明 Evolve Training 的逐层训练过程。</p>
+<p style="text-align:center;margin:16px 0;"><img src="images/02.jpg" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">3.1 第一阶段：基础动力学控制</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先训练机器人的基本动力学控制能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">给定各种不同的关节运动轨迹，包括目标位置、速度及必要的加速度：</p>
+<p style="text-align:center;margin:16px 0;"><img src="images/f1.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">AI 读取机器人的当前状态及目标轨迹，学习输出各关节力矩：</p>
+<p style="text-align:center;margin:16px 0;"><img src="images/f2.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">训练目标是尽可能减小轨迹跟踪误差，同时限制过大的力矩与不平滑的控制输出。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">初期可以利用已有的动力学控制器产生训练数据，通过监督模仿学习建立基础策略，再通过强化学习进一步改善性能。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一阶段并不需要复杂的神经网络。一个简单的 MLP 可能就足够了。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">训练完成后，形成能够高速执行的动力学控制内环。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如，将其运行频率设定为 1000 Hz。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一阶段获得的是机器人的基本运动能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">动力学内环与本体的关系</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这里有一个重要原则：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">动力学内环与机器人本体是一体的。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">动力学控制直接依赖机器人的关节、驱动器、质量分布、传感器与机械结构。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，我们不将动力学控制器视为一个可以脱离机器人身体独立迁移的通用模块。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它与机器人本体共同构成最底层的身体控制系统。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">当机器人身体改变时，相关动力学控制环必须与之一起适配或迁移。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">3.2 第二阶段：负载感知与动力学适应</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第二阶段，在机械臂末端增加随机负载。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如，将负载质量随机设置在 1–3 kg 范围内。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同负载改变了机器人的动力学特性，可能使原有的控制器产生跟踪误差。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此增加一个感知模块。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">模块从一段时间内的关节运动、速度和力矩历史中，估计负载参数及相关动力学变化。</p>
+<p style="text-align:center;margin:16px 0;"><img src="images/f3.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">其中，历史信息可以包括关节状态、力矩和目标轨迹。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">估计结果可以包含负载质量、质心、惯量或与控制相关的潜在动力学表征。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">该模块可以采用 TCN、MLP 历史窗口或其他时序编码器。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先使用随机负载仿真数据进行监督训练。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">然后，将它接入第一阶段已经训练好的动力学控制环，进行端到端强化学习。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">经过联合训练，机器人能够根据历史运动信息感知动力学变化，并调整输出力矩，使不同负载条件下的轨迹跟踪误差尽可能小。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">需要指出的是，参数能否从历史数据中准确估计，取决于系统的可辨识性以及运动轨迹是否具有足够的激励。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一阶段获得的是对负载变化的自适应控制能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它仍然属于与机器人身体紧密绑定的动力学控制体系。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">3.3 第三阶段：运动学外环</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第三阶段开始学习运动学。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">前两个阶段解决的是给定关节轨迹时，机器人如何准确运动。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">现在需要解决另一个问题：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">给定外部空间中的目标位置，机器人应该怎样运动？</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，我们在动力学控制环之外增加一个运动学外环。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">其任务是从外部空间观测和目标状态，估计相应的关节目标。</p>
+<p style="text-align:center;margin:16px 0;"><img src="images/f4.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">对于具有冗余自由度的机械臂，需要结合当前关节姿态及其他约束，以处理逆运动学中的多解问题。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一模块同样可以使用 MLP。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先通过传统运动学求解器产生训练数据，进行监督模仿学习。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">然后，将运动学外环与已有的动力学控制系统连接，再通过端到端强化学习优化空间运动精度。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">在实际推理中，两层仍然保持不同频率：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">动力学内环运行在 1000 Hz。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">运动学外环运行在 100 Hz。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">训练时可以联合优化，推理时保持分层异步执行。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一阶段使机器人从关节轨迹跟踪，发展为外部空间目标跟踪。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">3.4 第四阶段：自适应手眼标定</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第四阶段增加一个 Encoder，用于估计机器人、相机与工具之间的几何关系。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">在真实系统中，相机或工具的安装位置可能发生变化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">如果仍使用原有的标定参数，外部空间目标与机器人实际运动之间就可能出现误差。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，我们利用一段时间内关节状态 q 与外部空间观测 x 的变化，学习估计几何关系或其变化量。</p>
+<p style="text-align:center;margin:16px 0;"><img src="images/f5.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">其中，T̂ 代表相应的坐标变换估计。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先，通过不同相机位置和工具安装状态的数据训练 Encoder。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">然后将其接入已有的运动学外环，再通过端到端强化学习优化整个系统。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这样，机器人能够根据历史运动和观测信息，适应相机或工具几何关系的变化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一阶段的关键是运动与观测必须提供足够的几何约束，否则某些外参不能被唯一估计。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一阶段获得的是自适应几何标定能力。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">3.5 第五阶段：视觉与语义感知</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第五阶段，在空间控制外环之上增加视觉与语义感知能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">此前，机器人接收的是已经给定的三维空间目标。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">现在，我们希望机器人能够从二维图像中识别目标，并估计其三维位置。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先增加一个视觉 Encoder。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它能够从单帧或多帧图像中，估计机器人与目标之间的相对空间位置和姿态。</p>
+<p style="text-align:center;margin:16px 0;"><img src="images/f6.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">对于单目图像，需要结合必要的几何先验、标定信息、多帧运动或物体尺寸约束，以解决深度和尺度歧义。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">在视觉 Encoder 的基础上，再增加目标感知与语义模块，使机器人能够理解需要操作的对象。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先分别进行监督训练。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">然后将视觉和语义模块接入已有的运动学与动力学控制系统，再通过端到端强化学习进行联合优化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">最终形成：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">图像 → 目标识别 → 三维位姿估计 → 空间控制 → 动力学控制 → 机器人运动。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这样，机器人不再只能跟踪给定的三维坐标，还能够从图像中自主识别目标并完成运动。</p>
 <p style="text-align:center;margin:16px 0;"><img src="images/03.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">大脑不需要重新学习所有知识，只需要逐渐适应新身体的运动能力、几何结构和感知特性。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">反过来，也可以保留同一个机器人的身体控制模块，更换新的视觉感知或任务模块。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这种分层结构，使不同机器人的能力能够重新组合，也为跨机器人迁移提供了可能。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">当然，模块能够互换的前提是各层之间具有相对稳定的接口。接口越清晰，模块之间的依赖就越少，模型迁移与复用也就越容易。</p>
 <p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
-<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">八、Evolve Training 的整体结构</h2>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">四、数据异构性：不同的数据训练不同的环</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这是 Evolve Training 的一个重要特点。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同机器人学习任务需要的数据并不相同。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">动力学控制需要关节运动和力矩数据；运动学学习需要关节状态与外部空间位置的对应关系；视觉感知需要图像和几何标注；语义理解需要物体识别与语义数据。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这些数据的结构、频率、来源和物理意义存在很大差异。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">传统端到端训练常常试图在一个统一任务中同时使用多种数据。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 则将不同类型的数据对应到不同层次的学习任务。</p>
 <p style="text-align:center;margin:16px 0;"><img src="images/04.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">每增加一层，重复同样的训练过程：监督模仿 → 模块接入 → 联合强化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这意味着，不同数据集不必一开始就具有完全统一的采样频率和数据结构。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同模块可以使用各自适合的数据进行训练。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">只有在模块连接与联合强化学习阶段，才需要处理跨模块的协同和必要的数据对齐。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">训练数据的异构性，由不同控制层次来承接，而不是要求一个网络直接消化所有数据。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这为利用不同实验室、不同传感器、不同机器人平台所产生的数据提供了一种组织方式。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">但数据能否真正跨平台复用，仍取决于其物理语义、接口定义及训练分布是否兼容。</p>
 <p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
-<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">九、让智能逐步生长</h2>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 的核心，不是用一个庞大的模型一次性学习机器人的全部能力，而是将机器人的智能分解成不同的层次，逐步训练。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">首先学习基本的动力学控制，然后增加负载感知，再学习外部空间的运动学映射，接着加入自适应手眼标定，最后发展出视觉与语义感知能力。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">每一个阶段，都建立在前一个阶段已经学会的能力之上。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">训练时，先通过监督模仿学习建立新模块的基本能力，再将其接入已有系统，通过端到端强化学习进行联合优化。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">推理时，各个模块仍然保持不同的运行频率。低层负责高速的运动控制，高层负责感知、理解与规划。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">同时，不同层之间可以独立替换，使已有的智能能力能够在不同机器人之间迁移与复用。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这与 Society of Agents 的思想是一致的：机器人智能不必由一个单一模型完成，而可以由不同功能、不同时间尺度的模块共同构成。</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">五、身体与智能：动力学内环必须与本体一起迁移</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 将身体控制与更高层智能区分开来。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">其中，动力学内环不是一个与身体相互独立的软件模块。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它与机器人本体共同形成一个具有明确物理意义的整体。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如，Franka 的关节结构、驱动器、动力学参数和底层控制环共同决定了它的基本运动特性。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">如果更换一台不同的机器人，不能简单地要求原来的动力学控制器直接控制新的身体。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">需要为新身体建立相应的动力学控制能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">但更外层的模型可能具有更高的复用价值。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如，一个视觉模块识别出目标的三维位置，它未必需要知道机械臂具体使用什么驱动器。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">一个高层空间任务模块也可能只需要表达期望的工具位姿或运动目标。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，我们将系统区分为：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">Body-Bound Intelligence：与身体绑定的智能。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">包括机器人本体、执行器、基础动力学控制和紧密相关的本体状态感知。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">Transferable Intelligence：可以尝试跨身体迁移的智能。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">包括部分空间控制、几何理解、视觉感知、语义理解和任务策略。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">两者之间通过稳定的接口连接。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">当机器人更换身体时，身体及其动力学内环作为一个整体发生变化。更高层的模块则可以保留或进行局部适配。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这就相当于人的大脑换了一个身体。</p>
+<p style="text-align:center;margin:16px 0;"><img src="images/05.png" alt="" style="max-width: 100%; height: auto; border-radius: 8px; margin: 24px auto; display: block; box-shadow: 0 6px 20px rgba(11,21,48,0.08); border: 1px solid #eef2ff;"/></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">大脑不必完全重新学习视觉与任务知识，但需要学会如何通过新身体执行动作。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">当然，运动学模块也可能依赖具体身体结构，因而其可迁移程度通常介于底层动力学和高层感知之间。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这意味着模块的可迁移性并不是绝对的，而是与其距离具体身体物理特性的程度有关。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">越接近本体的模块，越依赖具体硬件；越接近抽象目标的模块，越有可能在不同身体之间复用。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这是一项需要实验验证的架构假设，而不是普遍成立的定律。</p>
+<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">六、训练时联合优化，推理时异步运行</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 的另一个核心原则，是将训练过程与实际运行方式区分开来。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">在训练阶段，新加入的模块能够与已有模块共同优化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如，当视觉模块加入后，最终的空间跟踪误差可以用于改善视觉定位、运动学和动力学模块之间的协同。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">但在实际推理阶段，系统仍然保持不同模块的独立执行频率。</p>
+<ul style="margin: 18px 0; padding-left: 0; list-style: none;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">语义与视觉感知</strong>　目标识别、空间估计　·　任务相关</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">几何与参数估计</strong>　外参、负载及状态估计　·　按变化速度设置</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">运动学外环</strong>　空间目标与关节参考　·　100 Hz</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">动力学内环</strong>　高速力矩控制　·　1000 Hz</li></ul>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一结构与 Society of Agents 的基本思想相联系。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">各模块拥有不同的功能和时间尺度，通过接口进行交互。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">高层并不需要接管底层每一个控制周期。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">低层可以在没有新的视觉输入时继续完成高速反馈控制。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这样，训练能够利用跨模块信息优化整体任务，而执行阶段仍能够保持控制系统的实时性。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不过，异步结构仍然需要处理通信延迟、状态陈旧、时间戳和模块间更新不一致的问题。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，控制频率的划分本身并不能自动保证闭环稳定性，还需要系统级验证。</p>
+<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">七、生物学启发</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 的基本思想与多个生物学研究方向具有联系。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">7.1 发育神经科学：先掌握能力，再利用能力学习</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">婴儿并不是先建立一个完整的世界模型，再开始学习运动。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">姿势控制、伸手、抓握与移动等能力逐渐形成，而新的运动能力又创造了新的感知与学习机会。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">运动和感知的发展相互促进。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这与 Evolve Training 的训练思想相似。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">先建立基础控制能力，再利用已有能力训练新的感知与控制功能。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不过，真实生物发育并不是严格的单向过程。视觉、触觉、运动与认知往往同时发展，并相互影响。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，我们借鉴的是渐进式技能获得的理念，而不是要求机器人严格模仿婴儿发育顺序。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">7.2 Bernstein：从简单协调到复杂运动</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Nikolai Bernstein 提出的运动自由度问题指出，复杂运动需要协调大量关节与肌肉。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">运动学习有时会经历限制自由度、逐渐释放自由度以及更有效利用身体动力学的过程。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一思想提示我们：</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">复杂控制问题可以先在受限条件下建立基本能力，再逐步增加复杂性。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 将类似的思想扩展到整个具身智能系统。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它不仅逐步增加运动复杂度，还逐步增加感知输入、功能模块与控制层次。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">但 Bernstein 的自由度变化模式并非适用于所有运动任务。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">7.3 生物神经系统的分层控制</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">哺乳动物的运动控制不是由单一的大脑区域统一完成。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">脊髓局部回路、脑干、小脑和皮层等系统共同参与运动生成、反馈调节、协调与动作选择。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这些系统具有不同的动态特性和功能分工。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，高级神经系统不需要在每一个瞬间显式指定全部肌肉控制信号。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这与 Evolve Training 的分层异步推理具有相似性。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">但生物神经系统是高度耦合、并行运行的网络，并不等同于一组严格串联的数字控制器。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">7.4 MOSAIC：模块化运动控制</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Wolpert 与 Kawato 提出的 MOSAIC 理论采用多个 Forward Model 与 Inverse Model，描述运动系统如何适应不同动力学条件。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Forward Model 预测动作后果，Inverse Model 计算运动控制指令。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同内部模型可以针对不同环境形成专门能力，并根据预测结果进行组合或选择。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这一思想与 Evolve Training 的负载感知、自适应控制及模块组合具有直接联系。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它说明复杂运动智能可以通过多个具有不同功能的模型来构建，而不一定全部依赖一个统一模型。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">7.5 Developmental Robotics：渐进式能力发展</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">发展机器人学研究机器人如何通过探索和学习，逐渐形成新的能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Pierre-Yves Oudeyer 等人的工作强调内在动机、学习进展与自主课程形成。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">机器人可以通过已经获得的能力探索新的任务，并逐渐发展更复杂的运动和交互行为。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 与这一思想接近，但具有更明确的控制工程结构。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">其训练顺序首先由动力学、运动学、感知与认知之间的物理关系组织，而非完全依靠自主探索形成。</p>
+<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">八、与已有学习方法的关系</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 与多种已有方法存在联系，但侧重点不同。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">8.1 Hierarchical Reinforcement Learning</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Hierarchical RL 研究不同抽象层次的策略、子目标和时间尺度。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 同样具有分层结构，但更加关注这些层次如何逐步训练和形成。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它不仅定义策略层次，还规定了监督初始化、模块连接和阶段性联合强化学习的过程。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">8.2 Curriculum Learning</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Curriculum Learning 通过安排逐渐复杂的任务，改善学习效率。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 不仅逐渐增加任务难度，还增加模型结构、传感器输入与控制环。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，它可以被理解为一种模型结构与训练任务共同演进的渐进式学习方法。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">8.3 Progressive Neural Networks</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Progressive Neural Networks 通过逐步增加网络结构与复用已有表征，支持连续学习与迁移。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">相关研究已经探索了从仿真到真实机器人的技能迁移。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 与之有明显联系，但它以机器人控制系统的物理层次作为组织原则，并强调异构数据、身体绑定模块与异步推理机制。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">8.4 Monolithic End-to-End Learning</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">传统完整端到端学习试图在统一模型中直接建立感知输入与动作输出的关系。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 则采用逐层学习和阶段性联合优化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">两者并非互相排斥。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">端到端模型可能在特定任务中获得更好的整体最优性能，而渐进式方法可能在训练效率、模块复用、已有能力保留和跨任务扩展方面具有优势。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这些差异需要通过实验，而不是仅凭架构讨论来证明。</p>
+<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">九、关键研究假设</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们提出以下六个研究假设。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">H1：渐进式训练能够提高样本效率。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">先学习基础控制能力，再逐步增加模块，可能比从零开始训练完整模型需要更少的交互样本。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">H2：分层训练能够更有效地利用异构数据。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同来源、不同频率的数据可以首先训练对应的控制环，降低对全模态同步数据的依赖。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">H3：阶段性端到端强化学习能够改善模块协同。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">单独训练的模块在连接后可能存在误差积累。联合强化学习有望改善系统整体性能。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">H4：模块化结构能够减少新能力学习对旧能力的影响。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">通过参数冻结、逐步解冻及历史能力约束，降低新模块训练造成的性能退化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">H5：分层异步推理能够提高实时执行效率。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">高层模块低频运行，动力学内环高速执行，有望降低高维感知计算对底层反馈控制的干扰。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">H6：身体绑定与稳定接口有利于跨机器人迁移。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">将机器人本体与动力学内环作为整体，并通过标准化接口连接高层智能，有望降低跨身体适配成本。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">以上均为待验证假设。</p>
+<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">十、实验验证</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们建议首先使用 Franka 机械臂，验证 Evolve Training 的核心优势。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">10.1 三组主要对照</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">A. Monolithic RL</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">将全部模块从零开始联合训练。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">B. Progressive Training without Joint RL</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">按照相同的顺序逐层训练模块，但不进行阶段性全系统联合强化学习。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">C. Evolve Training</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">按照监督模仿、模块连接、阶段性端到端强化学习的方式训练。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">为保证公平，应尽可能使用相同的任务数据、训练预算和模型容量，并明确报告专家数据成本。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">10.2 核心实验</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第一组实验是基础轨迹跟踪。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">测试不同关节轨迹下的跟踪误差、控制平滑性与学习效率。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第二组实验是未知负载控制。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">在 1–3 kg 随机负载下，测试模型能否根据历史运动数据适应动力学变化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第三组实验是空间控制。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">增加运动学外环，测试机器人跟踪三维空间轨迹的精度。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第四组实验是几何变化适应。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">改变相机与工具的安装关系，测试自适应标定模块能否恢复空间定位精度。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第五组实验是图像引导运动。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">从二维图像识别目标，估计三维位置，再控制机械臂运动到目标。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">第六组实验是跨身体迁移。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">保留部分高层感知与空间任务模块，将其连接到另一台不同的机械臂及其动力学控制环上。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">比较重新训练全部模型、只适配部分模块与从零训练之间的差异。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">10.3 数据异构性实验</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">除了比较任务成功率，我们特别建议设计一组异构数据实验。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">分别使用关节控制数据、外部空间跟踪数据以及图像数据，训练对应的模块。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">允许不同数据集具有不同的采样频率、来源和采集时间，不要求所有样本同时包含全部模态。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">然后将这些模块接入同一机器人，通过联合强化学习进行系统整合。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">再与必须使用全模态对齐数据训练的端到端基线进行比较。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">主要考察：</p>
+<ul style="margin: 18px 0; padding-left: 0; list-style: none;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>所需的完整多模态数据量</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>各模块独立数据的利用效率</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>训练样本需求与总计算成本</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>连接后的任务成功率</li>
+<li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; width: 6px; height: 6px; background: linear-gradient(135deg,#2e5bff,#6b9fff); border-radius: 50%; margin-right: 12px; vertical-align: 3px; box-shadow: 0 2px 4px rgba(46,91,255,0.3);">&nbsp;</span>新增传感器或新数据来源时的适配成本</li></ul>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这项实验可以直接验证 Evolve Training 在异构训练数据方面的价值。</p>
+<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">十一、技术挑战</h2>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">11.1 联合训练可能损害已有能力</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">端到端强化学习可能改变已经训练好的底层控制策略。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，需要研究冻结、逐步解冻、历史任务约束与安全控制机制。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">尤其是身体绑定的动力学内环，其稳定性必须通过独立测试保证。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">11.2 参数可辨识性</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">负载质量、质心、惯量及几何外参不一定能从任意历史数据中唯一估计。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">模型需要足够的运动激励和观测信息。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">必要时，可以估计对控制有用的潜在状态，而不强制恢复全部真实物理参数。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">11.3 模块接口与联合优化之间的矛盾</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">联合训练可以提高任务性能，但也可能使模块形成强烈的相互依赖。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">如果模块之间依赖大量隐式信息，独立替换将变得困难。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，需要明确接口的物理意义，并在训练中约束模块间的耦合程度。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">11.4 数据异构性不会完全消失</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">分层训练减少了对统一数据格式和全模态同步的要求，但无法消除所有异构问题。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同数据集仍可能存在坐标系、标定、单位、时间戳、动力学条件与分布差异。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这些差异需要在相应模块或接口处处理。</p>
+<h3 style="font-size: 16px; font-weight: 700; color: #1a2240; margin: 28px 0 12px; padding: 0 0 6px 0; border-bottom: 1px dashed #c7d2fe; letter-spacing: 0.3px;">11.5 不同层次的迁移能力存在差异</h3>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">并非越高层的模块就一定越容易迁移。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">例如，不同机械臂的工作空间、末端工具和任务约束可能不同，运动学与空间策略仍需要适配。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">因此，跨机器人迁移需要明确哪些能力共享、哪些能力保留在身体内部，以及哪些接口必须重新训练。</p>
+<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">十二、从 Evolve Training 到 Foundation Model</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">如果 Evolve Training 只在一台 Franka 机械臂上完成一次分层训练，它仍然只是一个机器人学习方法。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">要发展为 Foundation Model，需要进一步扩大能力的通用性与复用范围。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们设想的 Foundation Model 不一定是一个不可拆分的巨大网络。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它也可以是一组具有不同物理意义、不同运行频率，并通过标准接口连接的智能模块。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同类型的数据用于训练不同能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同机器人拥有各自的身体与动力学控制环。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">更外层的视觉、空间和任务模型可以在满足接口及能力约束的条件下进行迁移。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">随着新任务、新传感器和新机器人平台加入，系统可以继续增加或更新模块，而不必总是从零开始训练全部能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这种方法与 Society of Agents 的基本理念一致。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">智能并非一定来自一个统一模型，而可以来自多个不同功能、不同时间尺度的模块之间的协作。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 进一步提出了这些模块应如何被逐步训练出来。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">Society of Agents 关注智能系统如何组织，Evolve Training 关注智能系统如何成长。</strong></p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">前者提供协作结构，后者提供训练路径。</p>
+<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">十三、结论：让智能从身体中生长</h2>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">传统机器人控制从内环到外环逐层构建。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们认为，具身智能也可以采用相似的方式。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">机器人首先学习控制自己的身体，然后学习适应负载和动力学变化，再学习外部空间控制、几何关系、视觉感知与语义理解。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">每次增加一个模块，每次增加一种能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">每个模块首先使用适合自己的数据进行监督模仿学习，再与已有模块连接，通过端到端强化学习进行联合优化。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">不同类型的数据不必一开始就统一到同一个训练系统中。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它们可以分别训练不同层次的能力，再通过模块之间的协作形成完整智能。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">训练可以联合，运行仍然异步。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">动力学内环与机器人本体作为整体存在，而更外层的智能可以通过接口与不同的身体连接。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">这意味着，当机器人更换身体时，不必重新学习全部视觉、空间和任务知识。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">当机器人增加一种新的感知能力，也不必重新学习最基本的运动控制。</p>
 <p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">Evolve Training 并不是放弃端到端学习，而是不从端到端开始。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">它通过渐进式训练，将简单能力逐步组合成复杂能力；通过联合强化学习，让不同模块形成协同；通过分层异步推理，让机器人保持高效的实时控制。</p>
-<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们希望的不是一次训练出一个完整的机器人智能，而是建立一种方法，让机器人的智能能够不断生长。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;">我们希望建立一种方法，使具身智能能够从已有的身体能力出发，逐渐扩展感知、理解和行动能力。</p>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><strong style="color: #0b1530; font-weight: 800; background: linear-gradient(180deg, transparent 62%, #fff18a 62%, #fff18a 95%, transparent 95%); padding: 1px 6px;">智能不是一次训练完成的，而是可以持续生长的。</strong></p>
+<p style="text-align: center; color: #c7d2fe; letter-spacing: 14px; font-size: 11px; margin: 36px 0; user-select: none;">● ● ●</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0b1530; margin: 40px 0 18px; padding: 10px 16px 10px 14px; border-left: 4px solid #2e5bff; background: linear-gradient(90deg, #eef2ff 0%, #ffffff 70%); border-radius: 0 6px 6px 0; line-height: 1.5; letter-spacing: 0.3px;">参考文献</h2>
+<ol style="margin: 18px 0; padding-left: 0; list-style: none; counter-reset: list;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; background: linear-gradient(135deg,#2e5bff,#6b9fff); color: #ffffff; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; min-width: 24px; height: 22px; line-height: 22px; text-align: center; border-radius: 6px; margin-right: 12px; vertical-align: 2px; box-shadow: 0 2px 6px rgba(46,91,255,0.25);">01</span>Franchak, J. M., &amp; Adolph, K. E. (2024). An Update of the Development of Motor Behavior. WIREs Cognitive Science, 15(6), e1682. doi.org/10.1002/wcs.1682</li></ol>
+<ol style="margin: 18px 0; padding-left: 0; list-style: none; counter-reset: list;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; background: linear-gradient(135deg,#2e5bff,#6b9fff); color: #ffffff; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; min-width: 24px; height: 22px; line-height: 22px; text-align: center; border-radius: 6px; margin-right: 12px; vertical-align: 2px; box-shadow: 0 2px 6px rgba(46,91,255,0.25);">01</span>Guimarães, A. N., et al. (2020). Freezing Degrees of Freedom During Motor Learning: A Systematic Review. Motor Control, 24(3), 457–471. doi.org/10.1123/mc.2019-0060</li></ol>
+<ol style="margin: 18px 0; padding-left: 0; list-style: none; counter-reset: list;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; background: linear-gradient(135deg,#2e5bff,#6b9fff); color: #ffffff; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; min-width: 24px; height: 22px; line-height: 22px; text-align: center; border-radius: 6px; margin-right: 12px; vertical-align: 2px; box-shadow: 0 2px 6px rgba(46,91,255,0.25);">01</span>Wolpert, D. M., &amp; Kawato, M. (1998). Multiple Paired Forward and Inverse Models for Motor Control. Neural Networks, 11(7–8), 1317–1329. doi.org/10.1016/S0893-6080(98)00066-5</li></ol>
+<ol style="margin: 18px 0; padding-left: 0; list-style: none; counter-reset: list;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; background: linear-gradient(135deg,#2e5bff,#6b9fff); color: #ffffff; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; min-width: 24px; height: 22px; line-height: 22px; text-align: center; border-radius: 6px; margin-right: 12px; vertical-align: 2px; box-shadow: 0 2px 6px rgba(46,91,255,0.25);">01</span>Oudeyer, P.-Y. (2016). How Evolution May Work Through Curiosity-Driven Developmental Process. Topics in Cognitive Science. doi.org/10.1111/tops.12196</li></ol>
+<ol style="margin: 18px 0; padding-left: 0; list-style: none; counter-reset: list;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; background: linear-gradient(135deg,#2e5bff,#6b9fff); color: #ffffff; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; min-width: 24px; height: 22px; line-height: 22px; text-align: center; border-radius: 6px; margin-right: 12px; vertical-align: 2px; box-shadow: 0 2px 6px rgba(46,91,255,0.25);">01</span>Rusu, A. A., et al. (2016). Progressive Neural Networks. arxiv.org/abs/1606.04671</li></ol>
+<ol style="margin: 18px 0; padding-left: 0; list-style: none; counter-reset: list;"><li style="margin: 10px 0; line-height: 1.8; color: #242832; font-weight: 400;"><span style="display: inline-block; background: linear-gradient(135deg,#2e5bff,#6b9fff); color: #ffffff; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; min-width: 24px; height: 22px; line-height: 22px; text-align: center; border-radius: 6px; margin-right: 12px; vertical-align: 2px; box-shadow: 0 2px 6px rgba(46,91,255,0.25);">01</span>Rusu, A. A., et al. (2017). Sim-to-Real Robot Learning from Pixels with Progressive Nets. Proceedings of the Conference on Robot Learning, PMLR 78, 262–270. proceedings.mlr.press/v78/rusu17a.html</li></ol>
+<p style="margin: 16px 0; text-indent: 0; text-align: justify; color: #242832; line-height: 1.85;"><em style="font-style: italic; color: #5a6577;">本白皮书描述一种研究中的具身智能训练方法论。有关训练效率、数据异构性处理、模块复用和跨机器人迁移的预期优势，仍需要系统实验验证。</em></p>
 </section>    </main>
     <footer class="foot">
       作者：Dr OtherMind · 公众号「刷屏AI」
